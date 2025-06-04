@@ -9,12 +9,15 @@ const PORT = process.env.PORT || 5000;
 
 const path = require("path");
 // Serve React build in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+const isProd = process.env.NODE_ENV === "production";
+if (isProd) {
+  const buildPath = path.join(__dirname, "../client/build");
+  app.use(express.static(buildPath));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+    res.sendFile(path.join(buildPath, "index.html"));
   });
 }
+
 
 
 // Allow requests from React dev server
